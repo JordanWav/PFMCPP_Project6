@@ -86,9 +86,11 @@ struct U
             std::cout << "U's a updated value: " << this->a << std::endl;
             while( std::abs(this->b - this->a) > 0.001f )
             {
-                this->b += 1.5f;
+                this->b += 0.5f;
             }
             std::cout << "U's b updated value: " << this->b << std::endl;
+            std::cout << "a = " << this->a << std::endl;
+            std::cout << "b = " << this->b << std::endl;
             return this->b * this->a;
         }
         else
@@ -113,7 +115,9 @@ struct P
                 /*
                 write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
                 */
-                that->b += 1.5f;
+                that->b += 0.5f;
+                std::cout << "a = " << that->a << std::endl;
+                std::cout << "b = " << that->b << std::endl;
             }
             std::cout << "U's b updated value: " << that->b << std::endl;
             return that->b * that->a;
