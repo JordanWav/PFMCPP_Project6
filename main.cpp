@@ -46,56 +46,40 @@ struct Comparison                               //4
 struct U
 {
     float a { 0 }, b { 0 };
-    float updateValues(float* updated)      //12
+    float updateValues(float& updated)      //12
     {
-        if( updated != nullptr )
+        std::cout << "U's a value: " << a << std::endl;
+        a = updated;
+        std::cout << "U's a updated value: " << a << std::endl;
+        while( std::abs(b - a) > 0.001f )
         {
-            std::cout << "U's a value: " << this->a << std::endl;
-            this->a = *updated;
-            std::cout << "U's a updated value: " << this->a << std::endl;
-            while( std::abs(this->b - this->a) > 0.001f )
-            {
-                this->b += 0.5f;
-            }
-            std::cout << "U's b updated value: " << this->b << std::endl;
-            std::cout << "a = " << this->a << std::endl;
-            std::cout << "b = " << this->b << std::endl;
-            return this->b * this->a;
+            b += 0.5f;
         }
-        else
-        {
-            std::cout << "'updated' is nullptr" <<  std::endl;
-            return 0;
-        }
+        std::cout << "U's b updated value: " << b << std::endl;
+        std::cout << "a = " << a << std::endl;
+        std::cout << "b = " << b << std::endl;
+        return b * a;
     }
 };
 
 struct P
 {
-    static float updateValues(U* that, float* updated)        //10
+    static float updateValues(U& that, float& updated)        //10
     {
-        if( that != nullptr && updated != nullptr )
-        {    
-            std::cout << "U's a value: " << that->a << std::endl;
-            that->a = *updated;
-            std::cout << "U's a updated value: " << that->a << std::endl;
-            while( std::abs(that->b - that->a) > 0.001f )
-            {
-                /*
-                write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
-                */
-                that->b += 0.5f;
-                std::cout << "a = " << that->a << std::endl;
-                std::cout << "b = " << that->b << std::endl;
-            }
-            std::cout << "U's b updated value: " << that->b << std::endl;
-            return that->b * that->a;
-        } 
-        else
+        std::cout << "U's a value: " << that.a << std::endl;
+        that.a = updated;
+        std::cout << "U's a updated value: " << that.a << std::endl;
+        while( std::abs(that.b - that.a) > 0.001f )
         {
-            std::cout << "'updated' is nullptr" <<  std::endl;
-            return 0;
-        }   
+            /*
+            write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
+            */
+            that.b += 0.5f;
+            std::cout << "a = " << that.a << std::endl;
+            std::cout << "b = " << that.b << std::endl;
+        }
+        std::cout << "U's b updated value: " << that.b << std::endl;
+        return that.b * that.a;
     }
 };
         
@@ -127,8 +111,8 @@ int main()
     
     U u1;
     float updatedValue = 5.f;
-    std::cout << "[static func] u1's multiplied values: " << P::updateValues(&u1, &updatedValue) << std::endl;                  //11
+    std::cout << "[static func] u1's multiplied values: " << P::updateValues(u1, updatedValue) << std::endl;                  //11
     
     U u2;
-    std::cout << "[member func] u2's multiplied values: " << u2.updateValues( &updatedValue ) << std::endl;
+    std::cout << "[member func] u2's multiplied values: " << u2.updateValues( updatedValue ) << std::endl;
 }
